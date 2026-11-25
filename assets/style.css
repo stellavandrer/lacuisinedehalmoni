@@ -1067,3 +1067,40 @@ html.is-app .sheet-main a[href$="application.html"] { display: none; }
 .about-ks a { color: var(--bg); }
 .about-contact { padding-top: clamp(56px, 7vw, 96px); max-width: 760px; }
 @media (max-width: 760px) { .about-grid { grid-template-columns: 1fr; } .about-ks { border-radius: 28px; } }
+
+/* ---------- Guide « Bien débuter » ---------- */
+.guide { padding-bottom: 0; }
+.g-toc ol { list-style: none; margin: 28px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; counter-reset: g; }
+.g-toc a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px 0 8px; border-radius: 999px; background: var(--surface); font-weight: 600; text-decoration: none; counter-increment: g; }
+.g-toc a::before { content: counter(g); display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font: 700 .85rem/1 var(--display); }
+.g-toc a:hover { background: var(--ink); color: var(--bg); }
+.g-sec { padding: clamp(64px, 8vw, 112px) var(--m) 0; max-width: 860px; scroll-margin-top: 90px; }
+.g-sec.g-wide { max-width: none; }
+.g-sec h2 { display: flex; align-items: center; gap: 16px; font-size: clamp(2rem, 1.3rem + 2.4vw, 3.4rem); margin-bottom: 24px; }
+.g-sec h2 span { display: grid; place-items: center; flex: none; width: 1.3em; height: 1.3em; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-size: .6em; }
+.g-sec p, .g-sec li { font-size: var(--step-lead); line-height: 1.5; max-width: 60ch; }
+.g-sec ul { padding-left: 1.1em; display: grid; gap: 12px; }
+.g-sec li::marker { color: var(--accent); }
+.g-sec a:not(.btn) { font-weight: 600; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+.g-steps { padding: 0; list-style: none; counter-reset: st; display: grid; gap: 14px; margin: 24px 0; }
+.g-steps li { position: relative; padding: 18px 22px 18px 72px; border-radius: 24px; background: var(--surface); counter-increment: st; }
+.g-steps li::before { content: counter(st); position: absolute; left: 18px; top: 16px; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: var(--bg); font: 700 1.1rem/1 var(--display); }
+.g-list { list-style: none; padding: 0; margin: 32px 0 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 32px 24px; counter-reset: gl; }
+.g-list li { counter-increment: gl; }
+.g-list a { display: grid; gap: 6px; text-decoration: none; position: relative; }
+.g-list a::before { content: counter(gl); position: absolute; left: 0; top: 0; z-index: 1; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--accent); color: var(--accent-ink); font: 700 1rem/1 var(--display); box-shadow: 0 0 0 3px var(--bg); }
+.g-list .bowl { width: 100%; margin-bottom: 8px; }
+.g-n { font: 700 1.3rem/1.1 var(--display); letter-spacing: -0.02em; }
+.g-list a:hover .g-n { color: var(--accent); }
+.g-why { font-size: .9375rem !important; line-height: 1.4 !important; }
+.g-m { font-size: var(--step-small) !important; color: var(--soft); }
+.lexique { list-style: none; padding: 0 !important; margin: 28px 0 0; display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px !important; }
+.lexique li { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 14px; align-items: center; padding: 14px 18px; border-radius: 20px; background: var(--surface); }
+.lx-ko { grid-row: 1 / span 2; font: 700 1.9rem/1 var(--ko); color: var(--accent); }
+.lx-r { font-weight: 700; }
+.lx-s { font-size: .9375rem; color: var(--soft); line-height: 1.35; }
+.debut-foot, .kit-more { margin: 36px 0 0; }
+.kit-more a { color: var(--accent-ink); font-weight: 600; text-underline-offset: 4px; }
+@media (max-width: 1100px) { .g-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } .lexique { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .g-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 14px; } .lexique { grid-template-columns: 1fr; } .g-steps li { padding-left: 64px; } }
