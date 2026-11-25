@@ -281,7 +281,41 @@
         if (cnt) cnt.textContent = inCat + " recette" + (inCat > 1 ? "s" : "");
         shown += inCat;
       });
-      if (none) none.hidden = shown > 0;
+      if (none) {
+        none.hidden = shown > 0;
+        var sg = none.querySelector(".sugg");
+        if (sg) {
+          var picks = shown || !q || !q.value.trim() ? [] : suggest(q.value);
+          sg.hidden = !picks.length;
+          sg.querySelector(".sugg-l").innerHTML = picks.map(function (p) { return '<a href="recettes/' + p.s + '.html">' + p.n + "</a>"; }).join(", ");
+        }
+      }
+    };
+    // Fautes de frappe et romanisations différentes (tokbokki, bulgoggi, chigae…) : on compare des formes « pliées »
+    var fold = function (s) {
+      return norm(s).replace(/[^a-z]/g, "").replace(/tch/g, "ch").replace(/ou/g, "u").replace(/eo/g, "o").replace(/ae/g, "e").replace(/ee/g, "i")
+        .replace(/ch/g, "j").replace(/([a-z])\1/g, "$1").replace(/g/g, "k").replace(/b/g, "p").replace(/d/g, "t").replace(/r/g, "l");
+    };
+    var lev = function (a, b) {
+      var m = a.length, n = b.length, d = [], i, k;
+      for (i = 0; i <= m; i++) d[i] = [i];
+      for (k = 0; k <= n; k++) d[0][k] = k;
+      for (i = 1; i <= m; i++) for (k = 1; k <= n; k++) d[i][k] = Math.min(d[i - 1][k] + 1, d[i][k - 1] + 1, d[i - 1][k - 1] + (a[i - 1] === b[k - 1] ? 0 : 1));
+      return d[m][n];
+    };
+    var names = [].map.call(list.querySelectorAll(".dish"), function (li) {
+      var n = li.querySelector("strong").textContent; return { s: li.dataset.slug, n: n, f: fold(n) };
+    });
+    var suggest = function (txt) {
+      var f = fold(txt); if (f.length < 3) return [];
+      var seen = {};
+      return names.map(function (x) {
+        var best = lev(f, x.f);
+        if (x.f.indexOf(f) > -1) best = 0;
+        else if (f.length < x.f.length) best = Math.min(best, lev(f, x.f.slice(0, f.length)) + 1);
+        return { s: x.s, n: x.n, d: best };
+      }).filter(function (x) { if (seen[x.s] || x.d > Math.max(2, Math.floor(f.length / 3))) return false; seen[x.s] = 1; return true; })
+        .sort(function (a, b) { return a.d - b.d || Math.abs(fold(a.n).length - f.length) - Math.abs(fold(b.n).length - f.length); }).slice(0, 4);
     };
     if (q) q.addEventListener("input", apply);
     document.querySelectorAll(".chip[data-f]").forEach(function (c) {
@@ -625,4 +659,40 @@
       });
     });
   }
+})();
+
+// ---------- Accueil : « Ce soir, on mange quoi ? » ----------
+(function () {
+  var box = document.querySelector(".soir"), data = window.EWS_SOIR;
+  if (!box || !data) return;
+  box.hidden = false;
+  var pick = { t: 60, e: 1, v: 0 }, seed = 0;
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  var dur = function (m) { return m < 60 ? m + " min" : Math.floor(m / 60) + " h" + (m % 60 ? " " + (m % 60 < 10 ? "0" : "") + (m % 60) : ""); };
+  var hash = function (s) { var h = seed * 7919; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 100003; return h; };
+  var render = function () {
+    var minT = pick.t === 30 ? 0 : pick.t === 60 ? 25 : 50;
+    var ok = data.filter(function (r) {
+      var spice = pick.e === 0 ? r.e === 0 : pick.e === 1 ? r.e >= 1 && r.e <= 2 : r.e >= 2;
+      return r.t <= pick.t && r.t >= minT && spice && (!pick.v || r.v);
+    });
+    if (ok.length < 3) ok = data.filter(function (r) { return r.t <= pick.t && (!pick.v || r.v); });
+    ok.sort(function (a, b) { return (b.p - a.p) || (hash(a.s) - hash(b.s)); });
+    var top = ok.slice(0, 3);
+    box.querySelector(".soir-list").innerHTML = top.map(function (r) {
+      var pic = r.p ? '<img src="assets/photos/' + r.s + '-480.webp" alt="" width="480" height="480" loading="lazy" decoding="async">'
+        : '<span class="no-pic np-red" style="--np:' + Math.min(34, Math.round(88 / r.k.length)) + 'cqi" lang="ko" aria-hidden="true">' + esc(r.k) + "</span>";
+      return '<li><a href="recettes/' + r.s + '.html"><span class="bowl">' + pic + '</span><span class="soir-n">' + esc(r.n)
+        + '</span><span class="soir-m">' + dur(r.t) + " · " + (r.e ? "🌶".repeat(r.e) : "pas épicé") + "</span></a></li>";
+    }).join("") || '<li class="soir-vide">Rien ne correspond, essaie un autre choix.</li>';
+  };
+  box.querySelectorAll(".seg").forEach(function (g) {
+    g.addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      g.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      pick[g.dataset.k] = +b.dataset.v; seed = 0; render();
+    });
+  });
+  box.querySelector(".soir-more").addEventListener("click", function () { seed++; render(); });
+  render();
 })();

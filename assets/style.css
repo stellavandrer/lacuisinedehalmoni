@@ -1028,3 +1028,25 @@ html.is-app .sheet-main a[href$="application.html"] { display: none; }
 .share-btn.said .lbl { position: absolute; left: 50%; top: calc(100% + 6px); transform: translateX(-50%); width: auto; height: auto; clip: auto; overflow: visible;
   padding: 6px 10px; border-radius: 10px; background: var(--ink); color: var(--bg); font-size: .8125rem; }
 @media (max-width: 560px) { .r-actions .share-btn { flex: 0 0 52px; } }
+
+/* ---------- Accueil : « Ce soir, on mange quoi ? » ---------- */
+.soir { padding: clamp(56px, 7vw, 100px) var(--m) 0; }
+.soir-in { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 4vw, 64px); align-items: start;
+  padding: clamp(28px, 4vw, 56px); border-radius: 40px; background: var(--surface); }
+.soir h2 { font-size: clamp(2.1rem, 1.3rem + 2.6vw, 3.6rem); margin-bottom: 24px; }
+.soir fieldset { border: 0; padding: 0; margin: 0 0 18px; }
+.soir legend { font-weight: 600; margin-bottom: 8px; padding: 0; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button { min-height: 44px; padding: 0 16px; border: 0; border-radius: 999px; background: var(--bg); color: var(--ink); font: 600 .9375rem/1 var(--text); cursor: pointer; transition: background .2s, color .2s; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.soir-list { list-style: none; margin: 0 0 20px; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.soir-list a { display: grid; gap: 6px; text-decoration: none; }
+.soir-list .bowl { width: 100%; margin-bottom: 8px; }
+.soir-list a:hover .soir-n { color: var(--accent); }
+.soir-n { font: 700 clamp(1.15rem, 1rem + .5vw, 1.45rem)/1.1 var(--display); letter-spacing: -0.02em; transition: color .2s; }
+.soir-m { font-size: var(--step-small); color: var(--soft); }
+.soir-vide { grid-column: 1 / -1; color: var(--soft); }
+@media (max-width: 900px) { .soir-in { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .soir-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; } .soir-n { font-size: 1rem; } .soir-m { font-size: .75rem; } .soir-in { border-radius: 28px; } }
+/* Recherche : suggestions quand rien ne correspond */
+.none .sugg a { font-weight: 600; color: var(--ink); text-decoration-color: var(--accent); text-underline-offset: 4px; }
