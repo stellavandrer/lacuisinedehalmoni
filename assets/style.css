@@ -1115,3 +1115,11 @@ html.is-app .sheet-main a[href$="application.html"] { display: none; }
 .posts li[hidden] { display: none; }
 .posts.big li[hidden] + li { margin-top: 0; }
 .post-gal:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 28px; }
+/* Guides */
+.g-cartes { margin-top: 28px; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+.g-sec .g-cartes li { font-size: 1rem; }
+.guides-page { padding: 24px var(--m) 0; }
+.guides-list { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: clamp(40px, 5vw, 72px); }
+.guides-list .bowl { max-width: 420px; }
+@media (max-width: 1024px) { .g-cartes { grid-template-columns: 1fr !important; } }
+@media (max-width: 760px) { .guides-list { grid-template-columns: 1fr; } }
