@@ -1114,3 +1114,4 @@ html.is-app .sheet-main a[href$="application.html"] { display: none; }
 .blog-chips .chip span { opacity: .6; margin-left: 4px; }
 .posts li[hidden] { display: none; }
 .posts.big li[hidden] + li { margin-top: 0; }
+.post-gal:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 28px; }

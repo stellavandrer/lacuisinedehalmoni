@@ -1,5 +1,5 @@
-/* Service worker de La Cuisine de Halmoni (généré par build.py, version b4054e11a8) */
-const CACHE = "halmoni-b4054e11a8";
+/* Service worker de La Cuisine de Halmoni (généré par build.py, version 3039875222) */
+const CACHE = "halmoni-3039875222";
 const SOCLE = ["./", "index.html", "recettes.html", "frigo.html", "ingredients.html", "hors-ligne.html", "application.html", "manifest.webmanifest", "mes-recettes.html", "assets/style.css", "assets/app.js", "assets/favicon.svg", "assets/icon-192.png", "assets/fonts/league-spartan-latin-700-normal.woff2", "assets/fonts/figtree-latin-400-normal.woff2", "assets/fonts/figtree-latin-600-normal.woff2"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SOCLE)).then(() => self.skipWaiting()));
