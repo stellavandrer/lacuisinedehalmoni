@@ -1006,3 +1006,25 @@ html.is-app .sheet-main a[href$="application.html"] { display: none; }
 .mes-clear { min-height: 44px; padding: 0 16px; border: 0; border-radius: 999px; background: var(--surface); color: var(--ink); font: 600 .9375rem/1 var(--text); cursor: pointer; }
 @media (max-width: 560px) { .r-actions .btn { flex: 1 1 100%; } .r-act { flex: 1; justify-content: center; padding: 0 12px; } }
 @media print { .r-act, .cook { display: none !important; } }
+
+/* ---------- Recettes sans photo : le nom coréen dans un bol de couleur ---------- */
+.bowl { container-type: inline-size; }
+.no-pic { position: absolute; inset: 0; display: grid; place-items: center; font: 700 var(--np, 30cqi)/1 var(--ko); letter-spacing: -0.03em; white-space: nowrap; }
+.np-red { background: var(--accent); color: var(--accent-ink); }
+.np-ink { background: var(--ink); color: var(--bg); }
+.np-stone { background: var(--surface-2); color: var(--ink); }
+/* ---------- Ingrédients à cocher ---------- */
+.ingr-hint { font-size: var(--step-small); color: var(--soft); margin: 4px 0 0; }
+.ingr li.has-got { padding-left: 32px; cursor: pointer; }
+.ingr li.has-got::before { display: none; }
+.got { position: absolute; left: -6px; top: -3px; width: 30px; height: 30px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
+.got::after { content: ""; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--accent); background: transparent; transition: background .15s; }
+.got[aria-pressed="true"]::after { background: var(--accent); box-shadow: inset 0 0 0 2px var(--surface); }
+.ingr li.is-got { color: var(--soft); text-decoration: line-through; text-decoration-color: var(--accent); text-decoration-thickness: 2px; }
+@media (max-width: 560px) { .r-act { font-size: .9375rem; white-space: nowrap; padding: 0 10px; gap: 6px; } }
+/* Partager : un rond, pour tenir sur la même ligne que Garder et Mode cuisine */
+.share-btn { width: 52px; padding: 0; justify-content: center; position: relative; }
+.share-btn .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.share-btn.said .lbl { position: absolute; left: 50%; top: calc(100% + 6px); transform: translateX(-50%); width: auto; height: auto; clip: auto; overflow: visible;
+  padding: 6px 10px; border-radius: 10px; background: var(--ink); color: var(--bg); font-size: .8125rem; }
+@media (max-width: 560px) { .r-actions .share-btn { flex: 0 0 52px; } }

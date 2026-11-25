@@ -565,7 +565,8 @@
   if (lists.length) {
     var esc = function (s) { return String(s || "").replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
     var card = function (x) {
-      var pic = x.i ? '<img src="assets/photos/' + esc(x.s) + '-480.webp" alt="" width="120" height="120" loading="lazy" decoding="async">' : "";
+      var pic = x.i ? '<img src="assets/photos/' + esc(x.s) + '-480.webp" alt="" width="120" height="120" loading="lazy" decoding="async">'
+        : '<span class="no-pic np-stone" style="--np:' + Math.min(34, Math.round(88 / Math.max((x.k || "").length, 1))) + 'cqi" lang="ko" aria-hidden="true">' + esc(x.k) + "</span>";
       return '<li class="dish"><a href="recettes/' + esc(x.s) + '.html"><span class="bowl">' + pic + '</span><span class="dish-txt">'
         + '<span class="dish-line"><strong>' + esc(x.n) + '</strong><span class="dish-time">' + esc(x.m) + '</span></span>'
         + '<span class="dish-ko" lang="ko">' + esc(x.k) + "</span></span></a></li>";
@@ -583,5 +584,45 @@
     render();
     var clr = document.querySelector(".mes-clear");
     if (clr) clr.addEventListener("click", function () { put(KV, []); render(); });
+  }
+})();
+
+// ---------- Partager une recette, cocher les ingrédients ----------
+(function () {
+  var art = document.querySelector("article.recipe[data-slug]");
+  if (!art) return;
+  var sb = art.querySelector(".share-btn");
+  if (sb) {
+    sb.hidden = false;
+    sb.addEventListener("click", function () {
+      var data = { title: art.dataset.nom + " | La Cuisine de Halmoni", text: "La recette coréenne : " + art.dataset.nom, url: location.href.split("#")[0] };
+      if (navigator.share) { navigator.share(data).catch(function () {}); return; }
+      var lbl = sb.querySelector(".lbl");
+      var done = function (t) { lbl.textContent = t; sb.classList.add("said"); setTimeout(function () { lbl.textContent = "Partager"; sb.classList.remove("said"); }, 2200); };
+      if (navigator.clipboard) navigator.clipboard.writeText(data.url).then(function () { done("Lien copié"); }, function () { done("Copie impossible"); });
+    });
+  }
+  var lists = document.querySelectorAll(".ingr");
+  if (lists.length) {
+    var hint = document.querySelector(".ingr-hint"); if (hint) hint.hidden = false;
+    var arm = function (li) {
+      if (li.querySelector(".got")) return;
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "got"; b.setAttribute("aria-pressed", "false");
+      b.setAttribute("aria-label", "J'ai : " + li.textContent.replace(/c'est quoi \?.*$/, "").trim());
+      li.insertBefore(b, li.firstChild); li.classList.add("has-got");
+    };
+    lists.forEach(function (ul) {
+      ul.querySelectorAll("li").forEach(arm);
+      // les listes peuvent être réécrites (portions, version végétarienne) : on réarme les nouvelles lignes
+      new MutationObserver(function () { ul.querySelectorAll("li").forEach(arm); }).observe(ul, { childList: true, subtree: true });
+      ul.addEventListener("click", function (e) {
+        if (e.target.closest("a")) return;
+        var li = e.target.closest("li"); if (!li) return;
+        var b = li.querySelector(".got"); if (!b) return;
+        var on = b.getAttribute("aria-pressed") !== "true";
+        b.setAttribute("aria-pressed", on ? "true" : "false"); li.classList.toggle("is-got", on);
+      });
+    });
   }
 })();
