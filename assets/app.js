@@ -146,6 +146,7 @@
     });
     el.querySelector(".t-x").addEventListener("click", function () { clearInterval(id); el.remove(); });
   };
+  window.EWS_TIMER = startTimer;
   var DUR = /(\d+(?:,\d+)?)\s*(heures?|minutes?|min\b|secondes?)(?:\s*(\d+)(?!\s*(?:°|g\b|cm|ml|%)))?/g;
   var linkify = function (p) {
     if (!p || p.querySelector(".tmr")) return;
@@ -473,5 +474,114 @@
   if (steps) {
     var mine = steps.querySelector('[data-os="' + os + '"]');
     if (mine) { mine.classList.add("is-mine"); steps.insertBefore(mine, steps.firstChild); }
+  }
+})();
+
+// ---------- Favoris, recettes vues et mode cuisine ----------
+(function () {
+  var KF = "halmoni_favs", KV = "halmoni_vues", CF = "favoris-halmoni";
+  var get = function (k) { try { return JSON.parse(localStorage.getItem(k) || "[]"); } catch (e) { return []; } };
+  var put = function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+  var me = document.querySelector('script[src$="assets/app.js"]');
+  var root = me ? me.getAttribute("src").replace(/assets\/app\.js$/, "") : "";
+  var art = document.querySelector("article.recipe[data-slug]");
+
+  if (art) {
+    var rec = { s: art.dataset.slug, n: art.dataset.nom, k: art.dataset.ko, m: art.dataset.min, i: art.dataset.img === "1" };
+    // historique : les 12 dernières recettes ouvertes
+    put(KV, [rec].concat(get(KV).filter(function (x) { return x.s !== rec.s; })).slice(0, 12));
+    var fav = art.querySelector(".fav-btn");
+    if (fav) {
+      var isFav = function () { return get(KF).some(function (x) { return x.s === rec.s; }); };
+      var paint = function () {
+        var on = isFav();
+        fav.setAttribute("aria-pressed", on ? "true" : "false");
+        fav.querySelector(".lbl").textContent = on ? "Gardée" : "Garder";
+      };
+      fav.hidden = false; paint();
+      fav.addEventListener("click", function () {
+        var list = get(KF), on = isFav();
+        put(KF, on ? list.filter(function (x) { return x.s !== rec.s; }) : [rec].concat(list));
+        paint();
+        // une recette gardée est copiée pour être lisible hors ligne, avec sa photo
+        if (!on && "caches" in window) {
+          var urls = [location.pathname];
+          if (rec.i) urls.push(root + "assets/photos/" + rec.s + ".webp", root + "assets/photos/" + rec.s + "-480.webp");
+          caches.open(CF).then(function (c) { return c.addAll(urls); }).catch(function () {});
+        }
+      });
+    }
+    // mode cuisine : une étape à la fois, en grand, écran maintenu allumé
+    var cookBtn = art.querySelector(".cook-btn"), steps = [].slice.call(document.querySelectorAll(".steps > li"));
+    if (cookBtn && steps.length && window.HTMLDialogElement) {
+      cookBtn.hidden = false;
+      var d = document.createElement("dialog");
+      d.className = "cook"; d.setAttribute("aria-labelledby", "cook-h");
+      d.innerHTML = '<div class="cook-top"><p class="cook-n" id="cook-h"></p><button type="button" class="cook-x">Quitter</button></div>'
+        + '<div class="cook-bar"><span></span></div><div class="cook-step" aria-live="polite"></div>'
+        + '<div class="cook-nav"><button type="button" class="btn ghost cook-prev">Précédente</button><button type="button" class="btn cook-next">Suivante</button></div>'
+        + '<p class="cook-wake" hidden>L\'écran reste allumé tant que le mode cuisine est ouvert.</p>';
+      document.body.appendChild(d);
+      var i = 0, lock = null, startX = null;
+      var show = function () {
+        var p = steps[i].querySelector("p");
+        d.querySelector(".cook-n").textContent = art.dataset.nom + " · étape " + (i + 1) + " sur " + steps.length;
+        d.querySelector(".cook-step").innerHTML = p ? p.innerHTML : "";
+        d.querySelector(".cook-bar span").style.width = ((i + 1) / steps.length * 100) + "%";
+        d.querySelector(".cook-prev").disabled = i === 0;
+        d.querySelector(".cook-next").textContent = i === steps.length - 1 ? "Bon appétit !" : "Suivante";
+      };
+      var wake = function () {
+        if (!("wakeLock" in navigator)) return;
+        navigator.wakeLock.request("screen").then(function (l) { lock = l; d.querySelector(".cook-wake").hidden = false; }).catch(function () {});
+      };
+      var host = function () { var t = document.querySelector(".timers"); if (t && t.parentNode !== d) d.appendChild(t); };
+      cookBtn.addEventListener("click", function () { i = 0; show(); d.showModal(); host(); wake(); document.documentElement.classList.add("menu-is-open"); });
+      d.querySelector(".cook-x").addEventListener("click", function () { d.close(); });
+      d.addEventListener("close", function () {
+        if (lock) { lock.release().catch(function () {}); lock = null; }
+        var t = d.querySelector(".timers"); if (t) document.body.appendChild(t);
+        document.documentElement.classList.remove("menu-is-open");
+      });
+      var go = function (k) { if (k < 0) return; if (k >= steps.length) { d.close(); return; } i = k; show(); };
+      d.querySelector(".cook-prev").addEventListener("click", function () { go(i - 1); });
+      d.querySelector(".cook-next").addEventListener("click", function () { go(i + 1); });
+      d.addEventListener("keydown", function (e) { if (e.key === "ArrowRight") go(i + 1); if (e.key === "ArrowLeft") go(i - 1); });
+      d.addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; }, { passive: true });
+      d.addEventListener("touchend", function (e) {
+        if (startX === null) return; var dx = e.changedTouches[0].clientX - startX; startX = null;
+        if (Math.abs(dx) > 60) go(dx < 0 ? i + 1 : i - 1);
+      });
+      d.querySelector(".cook-step").addEventListener("click", function (e) {
+        var b = e.target.closest(".tmr"); if (!b || !window.EWS_TIMER) return;
+        window.EWS_TIMER(+b.dataset.s, "Étape " + (i + 1)); host();
+      });
+      document.addEventListener("visibilitychange", function () { if (d.open && document.visibilityState === "visible" && !lock) wake(); });
+    }
+  }
+
+  // page « Mes recettes »
+  var lists = document.querySelectorAll(".mes-list");
+  if (lists.length) {
+    var esc = function (s) { return String(s || "").replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+    var card = function (x) {
+      var pic = x.i ? '<img src="assets/photos/' + esc(x.s) + '-480.webp" alt="" width="120" height="120" loading="lazy" decoding="async">' : "";
+      return '<li class="dish"><a href="recettes/' + esc(x.s) + '.html"><span class="bowl">' + pic + '</span><span class="dish-txt">'
+        + '<span class="dish-line"><strong>' + esc(x.n) + '</strong><span class="dish-time">' + esc(x.m) + '</span></span>'
+        + '<span class="dish-ko" lang="ko">' + esc(x.k) + "</span></span></a></li>";
+    };
+    var render = function () {
+      ["favs", "vues"].forEach(function (k) {
+        var data = get(k === "favs" ? KF : KV), ul = document.querySelector('[data-list="' + k + '"]');
+        ul.innerHTML = data.map(card).join("");
+        document.querySelector('[data-vide="' + k + '"]').hidden = data.length > 0;
+        var n = document.querySelector('[data-n="' + k + '"]');
+        if (n) n.textContent = data.length ? data.length + " recette" + (data.length > 1 ? "s" : "") : "";
+      });
+      var clr = document.querySelector(".mes-clear"); if (clr) clr.hidden = !get(KV).length;
+    };
+    render();
+    var clr = document.querySelector(".mes-clear");
+    if (clr) clr.addEventListener("click", function () { put(KV, []); render(); });
   }
 })();
