@@ -1124,3 +1124,32 @@ html.is-app .sheet-main a[href$="application.html"] { display: none; }
 @media (max-width: 1024px) { .g-cartes { grid-template-columns: 1fr !important; } }
 @media (max-width: 760px) { .guides-list { grid-template-columns: 1fr; } }
 .g-sec .g-cartes a, .g-sec .g-list a { font-weight: 400; }
+
+/* ---------- Accueil sur téléphone : plus compact (2026-11-25) ----------
+   La page faisait ~21 écrans : les grandes sections deviennent des rangées qui défilent au doigt
+   ou des listes avec une petite photo à gauche. Rien n'est retiré. */
+@media (max-width: 760px) {
+  :root { --gap: 72px; }
+  /* Régions et moments : une rangée qui défile */
+  .regions ul, .moments ul { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px;
+    margin: 0 calc(-1 * var(--m)); padding: 2px var(--m) 8px; scrollbar-width: none; }
+  .regions ul::-webkit-scrollbar, .moments ul::-webkit-scrollbar { display: none; }
+  .regions li, .moments li { flex: 0 0 72%; scroll-snap-align: start; }
+  .moments li { flex-basis: 46%; }
+  /* Pour bien commencer, le kimchi, le blog : petite photo à gauche, texte à droite */
+  .debut .feat, .kimchi .feat, .kimchi .feat.two, .carnet .posts { grid-template-columns: 1fr; gap: 22px; }
+  .debut .feat a, .kimchi .feat a, .carnet .posts a { grid-template-columns: 104px 1fr; column-gap: 16px; row-gap: 2px; align-items: start; }
+  .debut .feat .bowl, .kimchi .feat .bowl, .carnet .posts .bowl { grid-row: 1 / span 4; width: 104px !important; max-width: none; margin: 0; justify-self: start; }
+  .debut .feat-name, .kimchi .feat-name { font-size: 1.35rem; }
+  .carnet .pi-t { font-size: 1.3rem; }
+  .debut .feat-why, .kimchi .feat-why, .carnet .pi-chapo { font-size: .9375rem; line-height: 1.4; }
+  /* Nouveautés : les 4 premières seulement sur téléphone (la page Recettes a tout) */
+  .apercu .menu > li:nth-child(n+5) { display: none; }
+  /* Garde-manger : trois colonnes plus petites */
+  .tiles { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .tile { border-radius: 18px; }
+  .tile .t-ko { font-size: clamp(1.1rem, 7vw, 1.8rem) !important; }
+  .tile .t-cap { font-size: .6875rem; }
+  .tile.t-head h2 { font-size: 1.15rem; }
+}
+@media (max-width: 760px) { .par-ing ul { display: flex; flex-wrap: wrap; gap: 8px; } .par-ing a { padding: 10px 14px; gap: 8px; font-size: .9375rem; min-height: 44px; } }
