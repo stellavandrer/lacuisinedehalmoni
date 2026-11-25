@@ -1123,3 +1123,4 @@ html.is-app .sheet-main a[href$="application.html"] { display: none; }
 .guides-list .bowl { max-width: 420px; }
 @media (max-width: 1024px) { .g-cartes { grid-template-columns: 1fr !important; } }
 @media (max-width: 760px) { .guides-list { grid-template-columns: 1fr; } }
+.g-sec .g-cartes a, .g-sec .g-list a { font-weight: 400; }
