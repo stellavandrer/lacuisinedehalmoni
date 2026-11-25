@@ -916,6 +916,10 @@ fieldset { min-width: 0; }
 .seal { width: 44px; height: 44px; flex: none; transform: rotate(-4deg); transition: transform .3s var(--ease); }
 .mark:hover .seal { transform: rotate(0deg) scale(1.04); }
 .sl-bg { fill: var(--accent); } .sl-ln { stroke: #fff; } .sl-fg { fill: #fff; }
-.mk-w { display: grid; gap: 4px; }
-.mk-big { font: 700 clamp(1.55rem, 1.3rem + .8vw, 2rem)/.8 var(--display); letter-spacing: -0.045em; }
-.mk-small { font: 600 .72rem/1 var(--text); letter-spacing: .01em; color: var(--soft); white-space: nowrap; }
+.mk-w { display: block; white-space: nowrap; font: 700 clamp(1.45rem, 1.2rem + .7vw, 1.85rem)/1 var(--display); letter-spacing: -0.04em; }
+/* Petits écrans et ordinateurs étroits : « La Cuisine de » au-dessus, « Halmoni » en grand */
+@media (max-width: 1180px) {
+  .mk-w { display: grid; gap: 3px; }
+  .mk-a { font: 600 .8rem/1 var(--text); letter-spacing: .01em; color: var(--soft); }
+  .mk-b { font: 700 clamp(1.55rem, 1.3rem + .8vw, 1.9rem)/.85 var(--display); letter-spacing: -0.045em; }
+}
