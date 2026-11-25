@@ -954,3 +954,4 @@ fieldset { min-width: 0; }
 @media (max-width: 899px) { .ing-toc { top: 60px; } }
 @media (max-width: 760px) { .ings { grid-template-columns: 1fr; gap: 56px; } .ing { grid-template-columns: 72px 1fr; gap: 18px; } }
 html.a-contraste .kit-list a { outline: 2px solid #15120f; }
+.pk-ko { white-space: nowrap; letter-spacing: -0.06em; } .pk-ko.long { font-size: .62rem; }
