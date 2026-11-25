@@ -104,43 +104,47 @@
     </div>
   </section>
   <h2 class="sr">Tous les articles</h2>
-  <ul class="posts big"><li class="rise"><a href="dakgalbi-chuncheon.html"><span class="bowl b-cover"><img src="../assets/blog/dakgalbi-chuncheon.webp" srcset="../assets/blog/dakgalbi-chuncheon-480.webp 480w, ../assets/blog/dakgalbi-chuncheon.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" fetchpriority="high" decoding="async"></span>
+  <div class="chips blog-chips js-only" role="group" aria-label="Filtrer les articles" hidden>
+    <button type="button" class="chip on" aria-pressed="true" data-z="">Tous <span>10</span></button>
+    <button type="button" class="chip" aria-pressed="false" data-z="coree">En Corée <span>5</span></button><button type="button" class="chip" aria-pressed="false" data-z="france">En France <span>4</span></button><button type="button" class="chip" aria-pressed="false" data-z="ailleurs">Ailleurs <span>1</span></button>
+  </div>
+  <ul class="posts big" id="blog-list"><li class="rise" data-zone="coree"><a href="dakgalbi-chuncheon.html"><span class="bowl b-cover"><img src="../assets/blog/dakgalbi-chuncheon.webp" srcset="../assets/blog/dakgalbi-chuncheon-480.webp 480w, ../assets/blog/dakgalbi-chuncheon.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" fetchpriority="high" decoding="async"></span>
       <span class="pi-kick">Chuncheon, Corée du Sud · septembre 2026</span>
       <span class="pi-t">Le dakgalbi de Chuncheon, cuit à table</span>
       <span class="pi-chapo">Le plat qui a fait la réputation de Chuncheon, mangé dans sa ville, avec le makguksu en prime.</span>
-      <span class="pi-lieu">Hakgok-ri Makguksu Dakgalbi</span></a></li><li class="rise"><a href="cafe-seochon.html"><span class="bowl b-cover"><img src="../assets/blog/cafe-seochon.webp" srcset="../assets/blog/cafe-seochon-480.webp 480w, ../assets/blog/cafe-seochon.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" fetchpriority="high" decoding="async"></span>
+      <span class="pi-lieu">Hakgok-ri Makguksu Dakgalbi</span></a></li><li class="rise" data-zone="coree"><a href="cafe-seochon.html"><span class="bowl b-cover"><img src="../assets/blog/cafe-seochon.webp" srcset="../assets/blog/cafe-seochon-480.webp 480w, ../assets/blog/cafe-seochon.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" fetchpriority="high" decoding="async"></span>
       <span class="pi-kick">Séoul, Corée du Sud · septembre 2026</span>
       <span class="pi-t">Une pause café à Seochon</span>
       <span class="pi-chapo">Un de ces petits cafés qu&#x27;on trouve en flânant dans les ruelles de Seochon.</span>
-      <span class="pi-lieu">Alldse Seochon</span></a></li><li class="rise"><a href="sushi-jangchung-dong.html"><span class="bowl b-cover"><img src="../assets/blog/sushi-jangchung-dong.webp" srcset="../assets/blog/sushi-jangchung-dong-480.webp 480w, ../assets/blog/sushi-jangchung-dong.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
+      <span class="pi-lieu">Alldse Seochon</span></a></li><li class="rise" data-zone="coree"><a href="sushi-jangchung-dong.html"><span class="bowl b-cover"><img src="../assets/blog/sushi-jangchung-dong.webp" srcset="../assets/blog/sushi-jangchung-dong-480.webp 480w, ../assets/blog/sushi-jangchung-dong.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
       <span class="pi-kick">Séoul, Corée du Sud · septembre 2026</span>
       <span class="pi-t">Une pause sushi à Séoul</span>
       <span class="pi-chapo">Le déjeuner du midi à Jangchung-dong : nigiri, udon et une anguille inoubliable.</span>
-      <span class="pi-lieu">Senmon</span></a></li><li class="rise"><a href="jjamppong-soho-londres.html"><span class="bowl b-cover"><img src="../assets/blog/jjamppong-soho-londres.webp" srcset="../assets/blog/jjamppong-soho-londres-480.webp 480w, ../assets/blog/jjamppong-soho-londres.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
+      <span class="pi-lieu">Senmon</span></a></li><li class="rise" data-zone="ailleurs"><a href="jjamppong-soho-londres.html"><span class="bowl b-cover"><img src="../assets/blog/jjamppong-soho-londres.webp" srcset="../assets/blog/jjamppong-soho-londres-480.webp 480w, ../assets/blog/jjamppong-soho-londres.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
       <span class="pi-kick">Londres, Royaume-Uni · août 2025</span>
       <span class="pi-t">Un jjamppong brûlant à Soho</span>
       <span class="pi-chapo">Une soupe coréenne épicée aux fruits de mer, en plein cœur de Londres.</span>
-      <span class="pi-lieu">CheeMc</span></a></li><li class="rise"><a href="paldo-paris.html"><span class="bowl b-cover"><img src="../assets/blog/paldo-paris.webp" srcset="../assets/blog/paldo-paris-480.webp 480w, ../assets/blog/paldo-paris.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
+      <span class="pi-lieu">CheeMc</span></a></li><li class="rise" data-zone="france"><a href="paldo-paris.html"><span class="bowl b-cover"><img src="../assets/blog/paldo-paris.webp" srcset="../assets/blog/paldo-paris-480.webp 480w, ../assets/blog/paldo-paris.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
       <span class="pi-kick">Paris, France · avril 2025</span>
       <span class="pi-t">Paldo, le festin sino-coréen du Quartier latin</span>
       <span class="pi-chapo">Tangsuyuk croustillant et jaengban jjajang à partager : les grands classiques de la cuisine sino-coréenne, à deux pas de Notre-Dame.</span>
-      <span class="pi-lieu">Paldo</span></a></li><li class="rise"><a href="morann-paris.html"><span class="bowl b-cover"><img src="../assets/blog/morann-paris.webp" srcset="../assets/blog/morann-paris-480.webp 480w, ../assets/blog/morann-paris.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
+      <span class="pi-lieu">Paldo</span></a></li><li class="rise" data-zone="france"><a href="morann-paris.html"><span class="bowl b-cover"><img src="../assets/blog/morann-paris.webp" srcset="../assets/blog/morann-paris-480.webp 480w, ../assets/blog/morann-paris.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
       <span class="pi-kick">Paris, France · juin 2024</span>
       <span class="pi-t">Morann, les nouilles froides de Pyongyang à Paris</span>
       <span class="pi-chapo">Un des rares restaurants nord-coréens de Paris, et ses naengmyeon faits maison à la minute.</span>
-      <span class="pi-lieu">Morann</span></a></li><li class="rise"><a href="plus82-paris.html"><span class="bowl b-cover"><img src="../assets/blog/plus82-paris.webp" srcset="../assets/blog/plus82-paris-480.webp 480w, ../assets/blog/plus82-paris.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
+      <span class="pi-lieu">Morann</span></a></li><li class="rise" data-zone="france"><a href="plus82-paris.html"><span class="bowl b-cover"><img src="../assets/blog/plus82-paris.webp" srcset="../assets/blog/plus82-paris-480.webp 480w, ../assets/blog/plus82-paris.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
       <span class="pi-kick">Paris, France · avril 2024</span>
       <span class="pi-t">+82 Paris, un bingsu au cœur du 5e</span>
       <span class="pi-chapo">Un petit café coréen très mignon, et un bingsu qui mérite le détour.</span>
-      <span class="pi-lieu">Plus 82 Paris</span></a></li><li class="rise"><a href="bobae-paris.html"><span class="bowl b-cover"><img src="../assets/blog/bobae-paris.webp" srcset="../assets/blog/bobae-paris-480.webp 480w, ../assets/blog/bobae-paris.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
+      <span class="pi-lieu">Plus 82 Paris</span></a></li><li class="rise" data-zone="france"><a href="bobae-paris.html"><span class="bowl b-cover"><img src="../assets/blog/bobae-paris.webp" srcset="../assets/blog/bobae-paris-480.webp 480w, ../assets/blog/bobae-paris.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
       <span class="pi-kick">Paris, France · avril 2024</span>
       <span class="pi-t">Bobae, le goût de la Corée dans le 13e</span>
       <span class="pi-chapo">Le restaurant de Paris qui se rapproche le plus des saveurs que j&#x27;ai connues en Corée.</span>
-      <span class="pi-lieu">Bobae</span></a></li><li class="rise"><a href="hanjeongsik-eurwangni-incheon.html"><span class="bowl b-cover"><img src="../assets/blog/hanjeongsik-eurwangni-incheon.webp" srcset="../assets/blog/hanjeongsik-eurwangni-incheon-480.webp 480w, ../assets/blog/hanjeongsik-eurwangni-incheon.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
+      <span class="pi-lieu">Bobae</span></a></li><li class="rise" data-zone="coree"><a href="hanjeongsik-eurwangni-incheon.html"><span class="bowl b-cover"><img src="../assets/blog/hanjeongsik-eurwangni-incheon.webp" srcset="../assets/blog/hanjeongsik-eurwangni-incheon-480.webp 480w, ../assets/blog/hanjeongsik-eurwangni-incheon.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
       <span class="pi-kick">Incheon, Corée du Sud · octobre 2023</span>
       <span class="pi-t">Un hanjeongsik face à la mer, à Eurwangni</span>
       <span class="pi-chapo">Un repas coréen complet, avec une table entière de petits plats, près de la plage d&#x27;Eurwangni.</span>
-      <span class="pi-lieu">Naru Hanjeongsik</span></a></li><li class="rise"><a href="norang-tongdak-seoul.html"><span class="bowl b-cover"><img src="../assets/blog/norang-tongdak-seoul.webp" srcset="../assets/blog/norang-tongdak-seoul-480.webp 480w, ../assets/blog/norang-tongdak-seoul.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
+      <span class="pi-lieu">Naru Hanjeongsik</span></a></li><li class="rise" data-zone="coree"><a href="norang-tongdak-seoul.html"><span class="bowl b-cover"><img src="../assets/blog/norang-tongdak-seoul.webp" srcset="../assets/blog/norang-tongdak-seoul-480.webp 480w, ../assets/blog/norang-tongdak-seoul.webp 1400w" sizes="(max-width: 760px) 80vw, 40vw" width="1400" height="1400" alt="" loading="lazy" decoding="async"></span>
       <span class="pi-kick">Séoul, Corée du Sud · octobre 2023</span>
       <span class="pi-t">Norang Tongdak, le poulet frit de la marmite</span>
       <span class="pi-chapo">Une assiette de poulet frit moitié nature, moitié laqué, et une bière : le chimaek dans toute sa simplicité.</span>

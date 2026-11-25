@@ -696,3 +696,15 @@
   box.querySelector(".soir-more").addEventListener("click", function () { seed++; render(); });
   render();
 })();
+
+// ---------- Blog : filtrer les articles par pays ----------
+(function () {
+  var chips = document.querySelector(".blog-chips"), list = document.getElementById("blog-list");
+  if (!chips || !list) return;
+  chips.hidden = false;
+  chips.addEventListener("click", function (e) {
+    var b = e.target.closest(".chip"); if (!b) return;
+    chips.querySelectorAll(".chip").forEach(function (c) { var on = c === b; c.classList.toggle("on", on); c.setAttribute("aria-pressed", on ? "true" : "false"); });
+    list.querySelectorAll("li[data-zone]").forEach(function (li) { li.hidden = !!b.dataset.z && li.dataset.zone !== b.dataset.z; li.classList.add("in"); });
+  });
+})();
