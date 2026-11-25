@@ -1050,3 +1050,20 @@ html.is-app .sheet-main a[href$="application.html"] { display: none; }
 @media (max-width: 560px) { .soir-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; } .soir-n { font-size: 1rem; } .soir-m { font-size: .75rem; } .soir-in { border-radius: 28px; } }
 /* Recherche : suggestions quand rien ne correspond */
 .none .sugg a { font-weight: 600; color: var(--ink); text-decoration-color: var(--accent); text-underline-offset: 4px; }
+
+/* ---------- À propos ---------- */
+.about { padding: 24px var(--m) 0; }
+.about-head { max-width: 900px; }
+.about-ko { font: 700 clamp(3.5rem, 2rem + 6vw, 8rem)/1 var(--ko); color: var(--accent); margin: 0 0 8px; letter-spacing: -0.04em; }
+.about-head h1 { font-size: clamp(2.6rem, 1rem + 4.6vw, 5.5rem); margin-bottom: 20px; }
+.about-head .lead { max-width: 44ch; }
+.about-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(40px, 5vw, 80px); padding-top: var(--gap); }
+.about h2 { font-size: clamp(1.8rem, 1.3rem + 1.6vw, 2.8rem); margin-bottom: 18px; }
+.about-grid p, .about-grid li { max-width: 56ch; }
+.about ul { padding-left: 1.1em; display: grid; gap: 10px; }
+.about li::marker { color: var(--accent); }
+.about a { text-decoration-color: var(--accent); text-underline-offset: 4px; font-weight: 600; }
+.about-ks { margin-top: var(--gap); padding: clamp(32px, 4vw, 56px); border-radius: 36px; background: var(--ink); color: var(--bg); }
+.about-ks a { color: var(--bg); }
+.about-contact { padding-top: clamp(56px, 7vw, 96px); max-width: 760px; }
+@media (max-width: 760px) { .about-grid { grid-template-columns: 1fr; } .about-ks { border-radius: 28px; } }
