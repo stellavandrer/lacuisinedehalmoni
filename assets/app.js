@@ -444,3 +444,34 @@
   var q = document.getElementById("q");
   if (q && location.hash === "#q") { q.focus({ preventScroll: true }); q.scrollIntoView({ block: "center" }); }
 })();
+
+// ---------- Application installable (PWA) ----------
+(function () {
+  var me = document.querySelector('script[src$="assets/app.js"]');
+  var root = me ? me.getAttribute("src").replace(/assets\/app\.js$/, "") : "";
+  if ("serviceWorker" in navigator && location.protocol === "https:") {
+    window.addEventListener("load", function () { navigator.serviceWorker.register(root + "sw.js", { scope: root || "./" }).catch(function () {}); });
+  }
+  var standalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  var btns = document.querySelectorAll(".install-btn"), ok = document.querySelectorAll(".install-ok");
+  var show = function (els, on) { els.forEach(function (e) { e.hidden = !on; }); };
+  if (standalone) { show(ok, true); document.documentElement.classList.add("is-app"); }
+  var deferred = null;
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); deferred = e; if (!standalone) show(btns, true); });
+  btns.forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (!deferred) return;
+      deferred.prompt();
+      deferred.userChoice.then(function (c) { if (c.outcome === "accepted") { show(btns, false); show(ok, true); } deferred = null; });
+    });
+  });
+  window.addEventListener("appinstalled", function () { show(btns, false); show(ok, true); });
+  // Page « Installer l'appli » : on met en avant les étapes de l'appareil utilisé
+  var ua = navigator.userAgent, os = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) ? "ios"
+    : /Android/.test(ua) ? "android" : (/Macintosh/.test(ua) && /Safari/.test(ua) && !/Chrome|Edg/.test(ua)) ? "mac" : "desktop";
+  var steps = document.querySelector(".appli-steps");
+  if (steps) {
+    var mine = steps.querySelector('[data-os="' + os + '"]');
+    if (mine) { mine.classList.add("is-mine"); steps.insertBefore(mine, steps.firstChild); }
+  }
+})();
