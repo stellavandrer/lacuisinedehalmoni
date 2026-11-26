@@ -1153,3 +1153,19 @@ html.is-app .sheet-main a[href$="application.html"] { display: none; }
   .tile.t-head h2 { font-size: 1.15rem; }
 }
 @media (max-width: 760px) { .par-ing ul { display: flex; flex-wrap: wrap; gap: 8px; } .par-ing a { padding: 10px 14px; gap: 8px; font-size: .9375rem; min-height: 44px; } }
+
+/* ---------- Toutes les pages sur téléphone (audit du 2026-11-26) ---------- */
+.r-hero h1 { overflow-wrap: anywhere; }
+@media (max-width: 760px) {
+  .r-hero h1.r-long { font-size: clamp(2.2rem, 10.5vw, 3rem); }
+  /* Listes de recettes : description sur deux lignes, petite photo */
+  .menu { row-gap: 22px; }
+  .dish a { gap: 14px; }
+  .dish .bowl { width: 76px; }
+  .dish-desc { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: .9375rem; }
+  /* Ingrédients : 3 recettes par ingrédient (le lien mène aux autres) */
+  .ing-use li:nth-child(n+4) { display: none; }
+}
+/* Mon frigo : sans ingrédient tapé, douze idées plutôt que toutes les recettes */
+#fridge-all.short > li:nth-child(n+13) { display: none; }
+.fridge-more { padding: 32px var(--m) 0; margin: 0; }

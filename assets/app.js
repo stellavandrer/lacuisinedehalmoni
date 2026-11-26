@@ -369,7 +369,9 @@
     var out = document.getElementById("fridge-out"), all = document.getElementById("fridge-all"), head = document.getElementById("h-res");
     var run = function () {
       var have = fridge.value.split(/[,;\n]/).map(norm).filter(function (w) { return w.length > 1; });
-      if (!have.length) { out.innerHTML = ""; all.hidden = false; head.textContent = "Toutes les recettes"; return; }
+      var more = document.querySelector(".fridge-more");
+      if (!have.length) { out.innerHTML = ""; all.hidden = false; all.classList.add("short"); if (more) more.hidden = false; head.textContent = "Quelques idées en attendant"; return; }
+      if (more) more.hidden = true;
       all.hidden = true; head.textContent = "Ce que tu peux cuisiner";
       var res = window.KS_FRIDGE.map(function (r) {
         var hit = r.i.filter(function (ing) {
